@@ -107,6 +107,32 @@
   </div>
 </section>
 
+<section class="video-section">
+  <div class="section-inner video-layout">
+    <div class="video-copy">
+      <p class="eyebrow">ANT in motion</p>
+      <h2>See the control room actually move.</h2>
+      <p>
+        A short product capture is better than another abstract claim: create a
+        session, move between rooms, send work to agents, and watch the evidence
+        surface build up around the conversation.
+      </p>
+    </div>
+    <div class="product-frame video-frame">
+      <video
+        controls
+        muted
+        playsinline
+        preload="metadata"
+        poster="/product/ant-demo-poster.jpg"
+        aria-label="ANT product video showing the live control room workflow"
+      >
+        <source src="/product/ant-demo.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</section>
+
 <section class="capabilities-section">
   <div class="section-inner">
     <div class="section-heading-row">
@@ -534,6 +560,34 @@
     max-height: 640px;
   }
 
+  .video-section {
+    background: #090E17;
+  }
+
+  .video-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: 2.4rem;
+    align-items: center;
+  }
+
+  .video-copy p:last-child {
+    color: #9AA8BA;
+    line-height: 1.7;
+    margin: 1rem 0 0;
+  }
+
+  .video-frame {
+    background: #050810;
+  }
+
+  .video-frame video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #050810;
+  }
+
   .section-heading-row {
     display: flex;
     justify-content: space-between;
@@ -737,6 +791,7 @@
     .section-heading-row,
     .room-layout,
     .mobile-layout,
+    .video-layout,
     .install-grid {
       display: block;
     }
@@ -744,7 +799,8 @@
     .snapshot-copy > *,
     .section-heading-row > *,
     .room-layout > *,
-    .mobile-layout > * {
+    .mobile-layout > *,
+    .video-layout > * {
       margin-bottom: 1.3rem;
     }
 
