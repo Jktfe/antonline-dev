@@ -11,7 +11,7 @@
   ];
 </script>
 
-<div style="min-height:100vh; background:var(--bg);">
+<div class="docs-shell" style="min-height:100vh; background:var(--bg);">
   <!-- Top nav -->
   <nav style="position:sticky; top:0; z-index:50; background:rgba(7,11,18,0.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--border);">
     <div style="max-width:1200px; margin:0 auto; padding:0 1.5rem; height:56px; display:flex; align-items:center; gap:2rem;">
@@ -35,9 +35,9 @@
     </div>
   </nav>
 
-  <div style="max-width:1200px; margin:0 auto; padding:2rem 1.5rem; display:flex; gap:3rem; align-items:flex-start;">
+  <div class="docs-wrap" style="max-width:1200px; margin:0 auto; padding:2rem 1.5rem; display:flex; gap:3rem; align-items:flex-start;">
     <!-- Sidebar -->
-    <aside style="width:200px; flex-shrink:0; position:sticky; top:80px;">
+    <aside class="docs-sidebar" style="width:200px; flex-shrink:0; position:sticky; top:80px;">
       <p style="font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:0.75rem;">Reference</p>
       <nav style="display:flex; flex-direction:column; gap:2px;">
         {#each nav as item}
@@ -58,8 +58,39 @@
     </aside>
 
     <!-- Content -->
-    <main style="flex:1; min-width:0; max-width:720px;">
+    <main class="docs-main" style="flex:1; min-width:0; max-width:720px;">
       {@render children()}
     </main>
   </div>
 </div>
+
+<style>
+  @media (max-width: 800px) {
+    .docs-wrap {
+      display: block !important;
+      padding: 1rem !important;
+    }
+
+    .docs-sidebar {
+      width: 100% !important;
+      position: static !important;
+      margin-bottom: 1.5rem;
+    }
+
+    .docs-sidebar > nav {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 0.35rem !important;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+
+    .docs-sidebar > div {
+      display: none;
+    }
+
+    .docs-main {
+      max-width: 100% !important;
+    }
+  }
+</style>

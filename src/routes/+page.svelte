@@ -4,33 +4,48 @@
   const features = [
     {
       icon: '⟳',
-      title: 'Live PTY Streaming',
-      desc: 'Real shell sessions streamed over WebSocket. Every keystroke, every output — live.',
+      title: 'Agent Terminals',
+      desc: 'Run Claude, Codex, Gemini, Copilot, Qwen, Pi, or any shell CLI in persistent PTY sessions.',
     },
     {
-      icon: '⌨',
-      title: 'Keyboard-Correct',
-      desc: 'Esc, Tab, Ctrl+C, arrows, Option/Alt, and paste all reach the shell as expected.',
+      icon: '◌',
+      title: 'Chat Rooms',
+      desc: 'Give humans and agents a shared room for decisions, updates, questions, and handoffs.',
     },
     {
-      icon: '✎',
-      title: 'Slow Edit Mode',
-      desc: 'Compose multi-line commands in a textarea overlay before sending to the PTY cleanly.',
+      icon: '⇄',
+      title: 'Room Links',
+      desc: 'Create focused discussion rooms, link existing rooms, and keep the main room readable.',
     },
     {
-      icon: '⇢',
-      title: 'Session Sharing',
-      desc: 'Share a session and any agent or human gets a CLI command to join it instantly.',
+      icon: '✓',
+      title: 'Prompt Bridge',
+      desc: 'Surface approvals, selections, and needs-input events in chat instead of hiding them in TUIs.',
+    },
+    {
+      icon: '⌁',
+      title: 'Working Signals',
+      desc: 'Track agent activity from real terminal output so busy CLIs do not look idle.',
     },
     {
       icon: '⌕',
-      title: 'FTS5 Search',
-      desc: 'Full-text search across every message in every session. Powered by SQLite FTS5.',
+      title: 'Evidence Trails',
+      desc: 'Search messages, transcripts, run events, tasks, file refs, and room history from one place.',
+    },
+  ];
+
+  const workflows = [
+    {
+      title: 'Start the work',
+      desc: 'Create a terminal or chat room, launch the CLI you want, and ANT links the terminal to a private chat automatically.',
     },
     {
-      icon: '⚿',
-      title: 'Auth + TLS',
-      desc: 'API key protection, Tailscale-only mode, and self-signed cert support built in.',
+      title: 'Coordinate the agents',
+      desc: 'Mention participants, route prompts, split noisy topics into linked discussions, and keep replies scoped to the right room.',
+    },
+    {
+      title: 'Review the evidence',
+      desc: 'Use messages, run events, terminal history, tasks, file refs, and read receipts as the operational record.',
     },
   ];
 </script>
@@ -68,21 +83,21 @@
     <div class="hero-text">
       <div class="hero-badge fade-up" style="animation-delay:0.05s">
         <span class="badge-dot"></span>
-        v3 · open source
+        v3 · agent coordination
       </div>
       <h1 class="hero-heading fade-up" style="animation-delay:0.12s">
-        A Nice<br/>Terminal.
+        ANT<br/>coordinates<br/>AI work.
       </h1>
       <p class="hero-sub fade-up" style="animation-delay:0.2s">
-        Self-hosted terminal multiplexer<br/>
-        for AI agents and humans.
+        Self-hosted control room for Claude, Codex, Gemini, Copilot, local CLIs,
+        and the humans steering them.
       </p>
       <div class="hero-ctas fade-up" style="animation-delay:0.28s">
         <a href="/docs" class="cta-primary">Get started →</a>
         <a href={GITHUB} target="_blank" rel="noopener" class="cta-secondary">GitHub ↗</a>
       </div>
       <div class="hero-tags fade-up" style="animation-delay:0.36s">
-        <span>SvelteKit</span><span>node-pty</span><span>xterm.js</span><span>SQLite FTS5</span>
+        <span>Rooms</span><span>PTYs</span><span>Prompt bridge</span><span>Room links</span><span>SQLite</span>
       </div>
     </div>
 
@@ -94,50 +109,50 @@
           <span style="background:#F59E0B"></span>
           <span style="background:#22C55E"></span>
         </div>
-        <span class="term-title">terminal</span>
+        <span class="term-title">ant control room</span>
       </div>
       <div class="term-body">
         <div class="term-line" style="animation-delay:0.6s">
           <span class="t-prompt">~</span><span class="t-sym"> $ </span><span class="t-cmd">ant sessions</span>
         </div>
         <div class="term-line" style="animation-delay:0.9s">
-          <span class="t-dim">  NAME          TYPE      STATUS    AGE</span>
+          <span class="t-dim">  NAME              TYPE      STATUS</span>
         </div>
         <div class="term-line" style="animation-delay:1.05s">
-          <span class="t-green">  ●</span><span class="t-out"> dev-server  </span><span class="t-dim">terminal  running  </span><span class="t-out"> 2m</span>
+          <span class="t-green">  ●</span><span class="t-out"> antcodex       </span><span class="t-dim">terminal  working</span>
         </div>
         <div class="term-line" style="animation-delay:1.2s">
-          <span class="t-muted">  ·</span><span class="t-out"> claude-chat </span><span class="t-dim">chat      idle     </span><span class="t-out"> 5m</span>
+          <span class="t-green">  ●</span><span class="t-out"> decisions      </span><span class="t-dim">chat      active</span>
         </div>
         <div class="term-line" style="animation-delay:1.35s">
-          <span class="t-muted">  ·</span><span class="t-out"> test-suite  </span><span class="t-dim">terminal  idle     </span><span class="t-out">12m</span>
+          <span class="t-muted">  ·</span><span class="t-out"> vera-ai         </span><span class="t-dim">chat      linked</span>
         </div>
         <div class="term-line" style="animation-delay:1.6s">&nbsp;</div>
         <div class="term-line" style="animation-delay:1.8s">
-          <span class="t-prompt">~</span><span class="t-sym"> $ </span><span class="t-cmd">ant terminal dev-server</span>
+          <span class="t-prompt">~</span><span class="t-sym"> $ </span><span class="t-cmd">ant msg decisions "@codex test"</span>
         </div>
         <div class="term-line" style="animation-delay:2.3s">
-          <span class="t-dim">  connecting to dev-server...</span>
+          <span class="t-dim">  routed to linked terminal chat</span>
         </div>
         <div class="term-line" style="animation-delay:2.9s">
-          <span class="t-green">  ✓</span><span class="t-dim"> connected — PTY 120×30</span>
+          <span class="t-green">  ✓</span><span class="t-dim"> needs-input cleared with evidence</span>
         </div>
         <div class="term-line" style="animation-delay:3.1s">
-          <span class="t-out">dev-server</span><span class="t-sym"> $ </span><span class="term-cursor"></span>
+          <span class="t-out">antcodex</span><span class="t-sym"> $ </span><span class="term-cursor"></span>
         </div>
       </div>
     </div>
   </div>
 
   <div class="hero-rule">
-    <span>Works with any shell &mdash; runs entirely on your machine</span>
+    <span>Runs on your machine &mdash; coordinates agents, rooms, prompts, and evidence</span>
   </div>
 </section>
 
 <!-- FEATURES -->
 <section class="features-section">
   <div class="section-inner">
-    <h2 class="section-heading">Everything a terminal needs</h2>
+    <h2 class="section-heading">More than terminal multiplexing</h2>
     <div class="features-grid">
       {#each features as f, i}
         <div class="feature-card" style="animation-delay:{0.05 * i}s">
@@ -150,17 +165,35 @@
   </div>
 </section>
 
+<!-- WORKFLOW -->
+<section class="workflow-section">
+  <div class="section-inner">
+    <h2 class="section-heading">A shared operating surface</h2>
+    <div class="workflow-grid">
+      {#each workflows as step, i}
+        <div class="workflow-item">
+          <div class="workflow-index">{i + 1}</div>
+          <h3>{step.title}</h3>
+          <p>{step.desc}</p>
+        </div>
+      {/each}
+    </div>
+  </div>
+</section>
+
 <!-- INSTALL -->
 <section class="install-section">
   <div class="section-inner">
-    <h2 class="section-heading">Up in three commands</h2>
+    <h2 class="section-heading">Run it on hardware you control</h2>
     <div class="install-grid">
       <div>
         <p class="install-label">Server</p>
         <div class="code-block">
           <pre><span class="line-comment"># clone and run</span>
 <span class="line-cmd">git clone https://github.com/Jktfe/a-nice-terminal</span>
-<span class="line-cmd">cd a-nice-terminal && npm install && npm run build</span>
+<span class="line-cmd">cd a-nice-terminal && npm install</span>
+<span class="line-cmd">cp .env.example .env</span>
+<span class="line-cmd">npm run build</span>
 <span class="line-cmd">npm run start</span>
 <span class="line-out">  ANT v3 running at http://0.0.0.0:6458</span></pre>
         </div>
@@ -168,11 +201,11 @@
       <div>
         <p class="install-label">CLI (on any machine)</p>
         <div class="code-block">
-          <pre><span class="line-comment"># install the ant CLI</span>
-<span class="line-cmd">cd cli && bun install && bun link</span>
-<span class="line-comment"># point it at your server</span>
+          <pre><span class="line-comment"># point the ant CLI at your server</span>
 <span class="line-cmd">ant config set --url https://your-host:6458</span>
-<span class="line-cmd">ant sessions</span></pre>
+<span class="line-cmd">ant sessions</span>
+<span class="line-cmd">ant chat join &lt;room-id&gt;</span>
+<span class="line-cmd">ant terminal history &lt;session-id&gt;</span></pre>
         </div>
       </div>
     </div>
@@ -235,7 +268,7 @@
     font-size: 1.1rem;
     color: var(--text);
     text-decoration: none;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   .nav-links {
@@ -266,7 +299,7 @@
 
   /* HERO */
   .hero {
-    min-height: 100vh;
+    min-height: 84vh;
     padding-top: 60px;
     display: flex;
     flex-direction: column;
@@ -288,9 +321,13 @@
     margin: 0 auto;
     padding: 4rem 1.5rem 3rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
     gap: 3rem;
     align-items: center;
+  }
+
+  .hero-text {
+    min-width: 0;
   }
 
   .hero-badge {
@@ -318,10 +355,10 @@
 
   .hero-heading {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-size: 4.35rem;
     font-weight: 800;
     line-height: 1.0;
-    letter-spacing: -0.04em;
+    letter-spacing: 0;
     color: var(--text);
     margin-bottom: 1.25rem;
   }
@@ -381,6 +418,8 @@
 
   /* Terminal window */
   .terminal-window {
+    width: 100%;
+    min-width: 0;
     border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.1);
     overflow: hidden;
@@ -423,6 +462,12 @@
     line-height: 1.8;
   }
 
+  .term-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .t-prompt { color: #475569; }
   .t-sym    { color: #64748B; }
   .t-cmd    { color: var(--green); }
@@ -455,7 +500,7 @@
     font-family: var(--font-display);
     font-size: 1.75rem;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
     margin-bottom: 2.5rem;
     color: var(--text);
   }
@@ -489,11 +534,57 @@
     font-weight: 600;
     color: var(--text);
     margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   .feature-desc {
     font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* WORKFLOW */
+  .workflow-section {
+    padding: 6rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .workflow-item {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+    padding: 1.5rem;
+  }
+
+  .workflow-index {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border-accent);
+    border-radius: 6px;
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .workflow-item h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .workflow-item p {
+    font-size: 0.86rem;
     color: var(--muted);
     line-height: 1.65;
   }
@@ -512,6 +603,10 @@
     margin-bottom: 2rem;
   }
 
+  .install-grid > div {
+    min-width: 0;
+  }
+
   .install-label {
     font-size: 0.78rem;
     font-family: var(--font-mono);
@@ -525,6 +620,7 @@
 
   .code-block {
     padding: 1.25rem 1.5rem;
+    max-width: 100%;
   }
   .code-block pre {
     margin: 0;
@@ -569,11 +665,28 @@
 
   /* Responsive */
   @media (max-width: 768px) {
+    .hero {
+      min-height: 82vh;
+    }
     .hero-inner {
       grid-template-columns: 1fr;
-      padding-top: 3rem;
+      padding: 3rem 1rem 2rem;
+      width: 100%;
+      max-width: 100%;
+    }
+    .hero-text {
+      min-width: 0;
+      max-width: 100%;
+    }
+    .hero-heading {
+      font-size: 2.45rem;
+      line-height: 1.08;
+    }
+    .hero-sub {
+      font-size: 1rem;
     }
     .features-grid { grid-template-columns: 1fr; }
+    .workflow-grid { grid-template-columns: 1fr; }
     .install-grid  { grid-template-columns: 1fr; }
     .terminal-window { display: none; }
   }

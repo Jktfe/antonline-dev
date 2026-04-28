@@ -17,6 +17,12 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -133,3 +139,25 @@ body {
 .prose td { padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.03); color: #94A3B8; vertical-align: top; }
 .prose td code { font-size: 0.78rem; }
 .prose tr:last-child td { border-bottom: none; }
+
+@media (max-width: 800px) {
+  .prose {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .prose h1 {
+    font-size: 1.7rem;
+  }
+
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  .prose .code-block {
+    max-width: 100%;
+  }
+}
