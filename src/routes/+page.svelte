@@ -49,10 +49,7 @@
 <header>
   <nav>
     <a href="/" class="logo">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-        <path d="M5 9 L11 12 L5 15" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="13" y="15" width="6" height="2" rx="1" fill="#22C55E"/>
-      </svg>
+      <img src="/favicon.svg" alt="" />
       <span>ANT</span>
     </a>
     <div class="nav-links">
@@ -66,6 +63,13 @@
   <img class="hero-shot" src="/product/ant-web-room.png" alt="ANT room showing agent messages, participants, linked discussions, tasks, file references, and the agent shortcut bar" />
   <div class="hero-shade"></div>
   <div class="hero-content">
+    <div class="hero-brand">
+      <img src="/favicon.svg" alt="" />
+      <div>
+        <strong>ANT</strong>
+        <span>A Nice Terminal</span>
+      </div>
+    </div>
     <div class="hero-badge"><span></span> Live multi-agent control room</div>
     <h1>Your AI team needs somewhere to work.</h1>
     <p>
@@ -211,11 +215,8 @@
 <footer>
   <div class="footer-inner">
     <a href="/" class="logo">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-        <path d="M5 9 L11 12 L5 15" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <rect x="13" y="15" width="6" height="2" rx="1" fill="#22C55E"/>
-      </svg>
-      ANT
+      <img src="/favicon.svg" alt="" />
+      <span>ANT</span>
     </a>
     <div class="footer-links">
       <a href="/docs">Docs</a>
@@ -259,10 +260,16 @@
     align-items: center;
     gap: 0.5rem;
     color: var(--text);
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-weight: 700;
     text-decoration: none;
     letter-spacing: 0;
+  }
+
+  .logo img {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
   }
 
   .nav-links,
@@ -330,6 +337,40 @@
     transform: translateX(calc((min(1180px, calc(100vw - 3rem)) - min(720px, calc(100vw - 2rem))) / -2));
   }
 
+  .hero-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.15rem;
+    padding: 0.65rem 0.8rem 0.65rem 0.65rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    background: rgba(7,11,18,0.68);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.26);
+  }
+
+  .hero-brand img {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+  }
+
+  .hero-brand strong,
+  .hero-brand span {
+    display: block;
+  }
+
+  .hero-brand strong {
+    color: #F8FAFC;
+    font-size: 1.04rem;
+    line-height: 1.05;
+  }
+
+  .hero-brand span {
+    color: #93A4BC;
+    font-size: 0.78rem;
+  }
+
   .hero-badge,
   .eyebrow,
   .install-label {
@@ -364,21 +405,21 @@
   h2,
   h3 {
     color: var(--text);
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     letter-spacing: 0;
   }
 
   h1 {
     max-width: 680px;
-    font-size: 4.9rem;
-    line-height: 0.98;
+    font-size: 4.55rem;
+    line-height: 1.04;
     font-weight: 800;
     margin: 0 0 1.25rem;
   }
 
   h2 {
     font-size: 2.1rem;
-    line-height: 1.1;
+    line-height: 1.14;
     font-weight: 700;
     margin: 0;
   }
@@ -567,7 +608,7 @@
 
   .stat-grid strong {
     color: var(--text);
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-size: 1.05rem;
     margin-bottom: 0.25rem;
   }
