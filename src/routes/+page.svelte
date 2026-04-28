@@ -1,60 +1,51 @@
 <script lang="ts">
   const GITHUB = 'https://github.com/Jktfe/a-nice-terminal';
 
-  const features = [
+  const capabilities = [
     {
-      icon: '⟳',
-      title: 'Agent Terminals',
-      desc: 'Run Claude, Codex, Gemini, Copilot, Qwen, Pi, or any shell CLI in persistent PTY sessions.',
+      kicker: 'Terminal + chat pairs',
+      title: 'Every agent gets a terminal and a room.',
+      desc: 'Run Claude, Codex, Gemini, Copilot, local Qwen/Pi models, or a normal shell. ANT keeps the PTY, linked chat, status, and history together.',
     },
     {
-      icon: '◌',
-      title: 'Chat Rooms',
-      desc: 'Give humans and agents a shared room for decisions, updates, questions, and handoffs.',
+      kicker: 'Room Links',
+      title: 'Split noisy work without losing context.',
+      desc: 'Create focused discussions, link existing rooms, promote summaries, and keep decisions visible without flooding the main coordination room.',
     },
     {
-      icon: '⇄',
-      title: 'Room Links',
-      desc: 'Create focused discussion rooms, link existing rooms, and keep the main room readable.',
+      kicker: 'Prompt Bridge',
+      title: 'Needs-input becomes a visible control surface.',
+      desc: 'Approvals, selections, retries, text responses, and discarded events show up in chat instead of being buried inside an agent TUI.',
     },
     {
-      icon: '✓',
-      title: 'Prompt Bridge',
-      desc: 'Surface approvals, selections, and needs-input events in chat instead of hiding them in TUIs.',
+      kicker: 'Evidence',
+      title: 'Work leaves a searchable trail.',
+      desc: 'Messages, terminal history, run events, tasks, file refs, read receipts, digests, and exports all point back to what actually happened.',
     },
     {
-      icon: '⌁',
-      title: 'Working Signals',
-      desc: 'Track agent activity from real terminal output so busy CLIs do not look idle.',
+      kicker: 'Agent Awareness',
+      title: 'Working means real output, not guesswork.',
+      desc: 'ANT tracks visible terminal activity so Codex-style CLIs do not look idle just because they lack a tidy status line.',
     },
     {
-      icon: '⌕',
-      title: 'Evidence Trails',
-      desc: 'Search messages, transcripts, run events, tasks, file refs, and room history from one place.',
+      kicker: 'Mobile',
+      title: 'ANTios keeps the control room in your pocket.',
+      desc: 'Quick triage, needs-input counters, chat-first navigation, thumb-friendly controls, and room lists for checking in away from the desk.',
     },
   ];
 
-  const workflows = [
-    {
-      title: 'Start the work',
-      desc: 'Create a terminal or chat room, launch the CLI you want, and ANT links the terminal to a private chat automatically.',
-    },
-    {
-      title: 'Coordinate the agents',
-      desc: 'Mention participants, route prompts, split noisy topics into linked discussions, and keep replies scoped to the right room.',
-    },
-    {
-      title: 'Review the evidence',
-      desc: 'Use messages, run events, terminal history, tasks, file refs, and read receipts as the operational record.',
-    },
+  const stats = [
+    ['Terminals', 'PTYs with linked chats'],
+    ['Rooms', 'Shared agent coordination'],
+    ['Discussions', 'Linked focus spaces'],
+    ['Evidence', 'Messages, tasks, files, runs'],
   ];
 </script>
 
 <svelte:head>
-  <title>ANT — A Nice Terminal</title>
+  <title>ANT - A Nice Terminal</title>
 </svelte:head>
 
-<!-- NAV -->
 <header>
   <nav>
     <a href="/" class="logo">
@@ -66,125 +57,131 @@
     </a>
     <div class="nav-links">
       <a href="/docs">Docs</a>
-      <a href={GITHUB} target="_blank" rel="noopener" class="nav-github">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-        </svg>
-        GitHub
-      </a>
+      <a href={GITHUB} target="_blank" rel="noopener" class="nav-github">GitHub</a>
     </div>
   </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero dot-grid">
-  <div class="hero-inner">
-    <!-- Text side -->
-    <div class="hero-text">
-      <div class="hero-badge fade-up" style="animation-delay:0.05s">
-        <span class="badge-dot"></span>
-        v3 · agent coordination
-      </div>
-      <h1 class="hero-heading fade-up" style="animation-delay:0.12s">
-        ANT<br/>coordinates<br/>AI work.
-      </h1>
-      <p class="hero-sub fade-up" style="animation-delay:0.2s">
-        Self-hosted control room for Claude, Codex, Gemini, Copilot, local CLIs,
-        and the humans steering them.
+<section class="hero">
+  <img class="hero-shot" src="/product/ant-web-room.png" alt="ANT room showing agent messages, participants, linked discussions, tasks, file references, and the agent shortcut bar" />
+  <div class="hero-shade"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span></span> Live multi-agent control room</div>
+    <h1>Your AI team needs somewhere to work.</h1>
+    <p>
+      ANT is the self-hosted operating surface for agent sessions: terminals,
+      rooms, prompt cards, linked discussions, evidence trails, and mobile triage.
+    </p>
+    <div class="hero-actions">
+      <a href="/docs" class="cta-primary">Get started</a>
+      <a href={GITHUB} target="_blank" rel="noopener" class="cta-secondary">View source</a>
+    </div>
+    <div class="hero-tags">
+      <span>Claude</span>
+      <span>Codex</span>
+      <span>Gemini</span>
+      <span>Local models</span>
+      <span>ANTios</span>
+    </div>
+  </div>
+</section>
+
+<section class="snapshot-band">
+  <div class="section-inner">
+    <div class="snapshot-copy">
+      <p class="eyebrow">This is ANT</p>
+      <h2>Not a terminal skin. A coordination layer.</h2>
+      <p>
+        The home screen shows the live operational graph: terminal agents on the
+        left, chat rooms on the right, linked chats attached to every PTY, and
+        status that follows real activity.
       </p>
-      <div class="hero-ctas fade-up" style="animation-delay:0.28s">
-        <a href="/docs" class="cta-primary">Get started →</a>
-        <a href={GITHUB} target="_blank" rel="noopener" class="cta-secondary">GitHub ↗</a>
-      </div>
-      <div class="hero-tags fade-up" style="animation-delay:0.36s">
-        <span>Rooms</span><span>PTYs</span><span>Prompt bridge</span><span>Room links</span><span>SQLite</span>
-      </div>
     </div>
-
-    <!-- Terminal window -->
-    <div class="terminal-window fade-up" style="animation-delay:0.2s">
-      <div class="term-chrome">
-        <div class="term-dots">
-          <span style="background:#EF4444"></span>
-          <span style="background:#F59E0B"></span>
-          <span style="background:#22C55E"></span>
-        </div>
-        <span class="term-title">ant control room</span>
-      </div>
-      <div class="term-body">
-        <div class="term-line" style="animation-delay:0.6s">
-          <span class="t-prompt">~</span><span class="t-sym"> $ </span><span class="t-cmd">ant sessions</span>
-        </div>
-        <div class="term-line" style="animation-delay:0.9s">
-          <span class="t-dim">  NAME              TYPE      STATUS</span>
-        </div>
-        <div class="term-line" style="animation-delay:1.05s">
-          <span class="t-green">  ●</span><span class="t-out"> antcodex       </span><span class="t-dim">terminal  working</span>
-        </div>
-        <div class="term-line" style="animation-delay:1.2s">
-          <span class="t-green">  ●</span><span class="t-out"> decisions      </span><span class="t-dim">chat      active</span>
-        </div>
-        <div class="term-line" style="animation-delay:1.35s">
-          <span class="t-muted">  ·</span><span class="t-out"> vera-ai         </span><span class="t-dim">chat      linked</span>
-        </div>
-        <div class="term-line" style="animation-delay:1.6s">&nbsp;</div>
-        <div class="term-line" style="animation-delay:1.8s">
-          <span class="t-prompt">~</span><span class="t-sym"> $ </span><span class="t-cmd">ant msg decisions "@codex test"</span>
-        </div>
-        <div class="term-line" style="animation-delay:2.3s">
-          <span class="t-dim">  routed to linked terminal chat</span>
-        </div>
-        <div class="term-line" style="animation-delay:2.9s">
-          <span class="t-green">  ✓</span><span class="t-dim"> needs-input cleared with evidence</span>
-        </div>
-        <div class="term-line" style="animation-delay:3.1s">
-          <span class="t-out">antcodex</span><span class="t-sym"> $ </span><span class="term-cursor"></span>
-        </div>
-      </div>
+    <div class="product-frame wide">
+      <img src="/product/ant-web-home.png" alt="ANT home screen showing terminal sessions, linked chats, chat rooms, and agent status" />
     </div>
-  </div>
-
-  <div class="hero-rule">
-    <span>Runs on your machine &mdash; coordinates agents, rooms, prompts, and evidence</span>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features-section">
+<section class="capabilities-section">
   <div class="section-inner">
-    <h2 class="section-heading">More than terminal multiplexing</h2>
-    <div class="features-grid">
-      {#each features as f, i}
-        <div class="feature-card" style="animation-delay:{0.05 * i}s">
-          <div class="feature-icon">{f.icon}</div>
-          <h3 class="feature-title">{f.title}</h3>
-          <p class="feature-desc">{f.desc}</p>
-        </div>
+    <div class="section-heading-row">
+      <div>
+        <p class="eyebrow">What it does</p>
+        <h2>Built for actual agent work</h2>
+      </div>
+      <p>Everything here exists because multi-agent sessions get noisy, agents need steering, and finished work needs evidence.</p>
+    </div>
+
+    <div class="capability-grid">
+      {#each capabilities as item}
+        <article class="capability-card">
+          <p>{item.kicker}</p>
+          <h3>{item.title}</h3>
+          <span>{item.desc}</span>
+        </article>
       {/each}
     </div>
   </div>
 </section>
 
-<!-- WORKFLOW -->
-<section class="workflow-section">
-  <div class="section-inner">
-    <h2 class="section-heading">A shared operating surface</h2>
-    <div class="workflow-grid">
-      {#each workflows as step, i}
-        <div class="workflow-item">
-          <div class="workflow-index">{i + 1}</div>
-          <h3>{step.title}</h3>
-          <p>{step.desc}</p>
-        </div>
-      {/each}
+<section class="room-section">
+  <div class="section-inner room-layout">
+    <div>
+      <p class="eyebrow">Rooms that know the work</p>
+      <h2>Discuss, split, decide, and keep receipts.</h2>
+      <p>
+        A room can carry participants, linked discussions, task state, file
+        references, memory, prompt responses, and read receipts. Agents respond
+        in the room they are in, while summaries and decisions can be promoted
+        deliberately.
+      </p>
+      <div class="stat-grid">
+        {#each stats as stat}
+          <div>
+            <strong>{stat[0]}</strong>
+            <span>{stat[1]}</span>
+          </div>
+        {/each}
+      </div>
+    </div>
+    <div class="product-frame">
+      <img src="/product/ant-web-room.png" alt="ANT chat room with participants, discussions, tasks, file refs, and agent shortcuts" />
     </div>
   </div>
 </section>
 
-<!-- INSTALL -->
+<section class="mobile-section">
+  <div class="section-inner mobile-layout">
+    <div class="phone-frame">
+      <img src="/product/ant-ios-home.png" alt="ANTios home screen with needs-input, terminal, chat, pinned, and attention filters" />
+    </div>
+    <div>
+      <p class="eyebrow">ANTios</p>
+      <h2>The same coordination surface, built for thumb zones.</h2>
+      <p>
+        ANTios is chat-first: needs-input, terminals, chats, pinned items, and
+        attention queues are visible immediately. It is for checking status,
+        sending instructions, and unblocking agents without opening the full web UI.
+      </p>
+      <ul>
+        <li>Needs-input, terminal, and chat counts at the top.</li>
+        <li>Large tap targets and compact filters for one-handed use.</li>
+        <li>Room list and quick actions tuned for mobile triage.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <section class="install-section">
   <div class="section-inner">
-    <h2 class="section-heading">Run it on hardware you control</h2>
+    <div class="section-heading-row">
+      <div>
+        <p class="eyebrow">Self-hosted</p>
+        <h2>Run the control room on your own machine.</h2>
+      </div>
+      <a href="/docs" class="cta-primary">Full docs</a>
+    </div>
     <div class="install-grid">
       <div>
         <p class="install-label">Server</p>
@@ -194,28 +191,23 @@
 <span class="line-cmd">cd a-nice-terminal && npm install</span>
 <span class="line-cmd">cp .env.example .env</span>
 <span class="line-cmd">npm run build</span>
-<span class="line-cmd">npm run start</span>
-<span class="line-out">  ANT v3 running at http://0.0.0.0:6458</span></pre>
+<span class="line-cmd">npm run start</span></pre>
         </div>
       </div>
       <div>
-        <p class="install-label">CLI (on any machine)</p>
+        <p class="install-label">CLI</p>
         <div class="code-block">
-          <pre><span class="line-comment"># point the ant CLI at your server</span>
-<span class="line-cmd">ant config set --url https://your-host:6458</span>
+          <pre><span class="line-comment"># join rooms and inspect evidence</span>
 <span class="line-cmd">ant sessions</span>
 <span class="line-cmd">ant chat join &lt;room-id&gt;</span>
+<span class="line-cmd">ant chat decide &lt;id&gt; approve --why "safe"</span>
 <span class="line-cmd">ant terminal history &lt;session-id&gt;</span></pre>
         </div>
       </div>
     </div>
-    <div class="install-cta">
-      <a href="/docs" class="cta-primary">Full setup guide →</a>
-    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <a href="/" class="logo">
@@ -236,23 +228,26 @@
 </footer>
 
 <style>
-  /* NAV */
   header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(7, 11, 18, 0.8);
-    border-bottom: 1px solid var(--border);
+    background: rgba(7, 11, 18, 0.72);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  nav,
+  .section-inner,
+  .footer-inner {
+    width: min(1180px, calc(100vw - 3rem));
+    margin: 0 auto;
   }
 
   nav {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
     height: 60px;
     display: flex;
     align-items: center;
@@ -263,344 +258,371 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    color: var(--text);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--text);
     text-decoration: none;
     letter-spacing: 0;
   }
 
-  .nav-links {
+  .nav-links,
+  .hero-actions,
+  .footer-links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.9rem;
+    flex-wrap: wrap;
   }
 
-  .nav-links a {
-    font-size: 0.9rem;
+  .nav-links a,
+  .footer-links a {
     color: var(--muted);
+    font-size: 0.9rem;
     text-decoration: none;
-    transition: color 0.15s;
   }
-  .nav-links a:hover { color: var(--text); }
 
-  .nav-github {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.35rem 0.85rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.82rem !important;
-    transition: border-color 0.15s !important;
+  .nav-links a:hover,
+  .footer-links a:hover {
+    color: var(--text);
   }
-  .nav-github:hover { border-color: rgba(255,255,255,0.2) !important; }
 
-  /* HERO */
+  .nav-github,
+  .cta-secondary {
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    padding: 0.55rem 0.9rem;
+  }
+
   .hero {
-    min-height: 84vh;
-    padding-top: 60px;
-    display: flex;
-    flex-direction: column;
+    min-height: 88vh;
     position: relative;
+    display: grid;
+    align-items: end;
     overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background: #071019;
   }
 
-  .hero::before {
-    content: '';
+  .hero-shot {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(99,102,241,0.07) 0%, transparent 70%);
-    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(0.92) contrast(1.04);
   }
 
-  .hero-inner {
-    flex: 1;
-    max-width: 1100px;
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(5,8,16,0.94) 0%, rgba(5,8,16,0.78) 38%, rgba(5,8,16,0.22) 100%),
+      linear-gradient(0deg, rgba(7,11,18,0.9) 0%, rgba(7,11,18,0.08) 42%, rgba(7,11,18,0.5) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: min(720px, calc(100vw - 2rem));
     margin: 0 auto;
-    padding: 4rem 1.5rem 3rem;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
-    gap: 3rem;
-    align-items: center;
+    padding: 8rem 0 4.25rem;
+    transform: translateX(calc((min(1180px, calc(100vw - 3rem)) - min(720px, calc(100vw - 2rem))) / -2));
   }
 
-  .hero-text {
-    min-width: 0;
+  .hero-badge,
+  .eyebrow,
+  .install-label {
+    color: #8EA0B8;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   .hero-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.3rem 0.75rem;
+    gap: 0.55rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgba(99,102,241,0.34);
     border-radius: 999px;
-    border: 1px solid rgba(99,102,241,0.25);
-    background: rgba(99,102,241,0.07);
-    font-size: 0.78rem;
-    font-family: var(--font-mono);
-    color: #94A3B8;
-    margin-bottom: 1.5rem;
-    width: fit-content;
+    background: rgba(10,15,24,0.72);
+    margin-bottom: 1.35rem;
+    text-transform: none;
   }
 
-  .badge-dot {
-    width: 6px;
-    height: 6px;
+  .hero-badge span {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--green);
-    box-shadow: 0 0 6px var(--green);
+    box-shadow: 0 0 10px var(--green);
   }
 
-  .hero-heading {
-    font-family: var(--font-display);
-    font-size: 4.35rem;
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: 0;
+  h1,
+  h2,
+  h3 {
     color: var(--text);
-    margin-bottom: 1.25rem;
+    font-family: var(--font-display);
+    letter-spacing: 0;
   }
 
-  .hero-sub {
+  h1 {
+    max-width: 680px;
+    font-size: 4.9rem;
+    line-height: 0.98;
+    font-weight: 800;
+    margin: 0 0 1.25rem;
+  }
+
+  h2 {
+    font-size: 2.1rem;
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 1.03rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .hero-content > p,
+  .snapshot-copy p,
+  .section-heading-row > p,
+  .room-layout p,
+  .mobile-layout p,
+  .mobile-layout li,
+  .capability-card span {
+    color: #9AA8BA;
+    line-height: 1.7;
+  }
+
+  .hero-content > p {
+    max-width: 610px;
     font-size: 1.1rem;
-    line-height: 1.65;
-    color: var(--muted);
-    margin-bottom: 2rem;
+    margin: 0 0 1.75rem;
   }
 
-  .hero-ctas {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
+  .cta-primary,
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
   }
 
   .cta-primary {
-    padding: 0.65rem 1.25rem;
-    border-radius: 8px;
     background: var(--indigo);
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: opacity 0.15s, transform 0.15s;
+    border-radius: 8px;
+    padding: 0.65rem 1.15rem;
   }
-  .cta-primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
   .cta-secondary {
-    padding: 0.65rem 1.25rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-accent);
-    color: var(--text);
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: border-color 0.15s, background 0.15s;
+    background: rgba(7,11,18,0.48);
   }
-  .cta-secondary:hover { border-color: rgba(99,102,241,0.5); background: rgba(99,102,241,0.05); }
 
   .hero-tags {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.45rem;
     flex-wrap: wrap;
+    margin-top: 1.4rem;
   }
+
   .hero-tags span {
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    font-size: 0.75rem;
+    padding: 0.28rem 0.62rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    background: rgba(7,11,18,0.58);
+    color: #CDD6E2;
     font-family: var(--font-mono);
-    color: var(--muted);
+    font-size: 0.74rem;
   }
 
-  /* Terminal window */
-  .terminal-window {
+  section:not(.hero) {
+    padding: 5.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .snapshot-band,
+  .install-section {
+    background: var(--bg-2);
+  }
+
+  .snapshot-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.1fr);
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .snapshot-copy h2,
+  .section-heading-row h2,
+  .room-layout h2,
+  .mobile-layout h2 {
+    margin-top: 0.45rem;
+  }
+
+  .snapshot-copy p:last-child,
+  .section-heading-row > p {
+    margin: 0;
+    max-width: 540px;
+  }
+
+  .product-frame {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #F7F7F5;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+  }
+
+  .product-frame img {
+    display: block;
     width: 100%;
-    min-width: 0;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.1);
-    overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(99,102,241,0.1);
-    background: #050810;
+    height: auto;
   }
 
-  .term-chrome {
+  .product-frame.wide {
+    max-height: 640px;
+  }
+
+  .section-heading-row {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.65rem 1rem;
-    background: #0A0F18;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: end;
+    margin-bottom: 2rem;
   }
 
-  .term-dots {
-    display: flex;
-    gap: 0.375rem;
-  }
-  .term-dots span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    opacity: 0.8;
-  }
-
-  .term-title {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: #475569;
-    flex: 1;
-    text-align: center;
-  }
-
-  .term-body {
-    padding: 1.25rem 1.25rem 1.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    line-height: 1.8;
-  }
-
-  .term-line {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .t-prompt { color: #475569; }
-  .t-sym    { color: #64748B; }
-  .t-cmd    { color: var(--green); }
-  .t-out    { color: #CBD5E1; }
-  .t-dim    { color: #475569; }
-  .t-muted  { color: #334155; }
-  .t-green  { color: var(--green); }
-
-  .hero-rule {
-    text-align: center;
-    padding: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-  .hero-rule span {
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-family: var(--font-mono);
-    letter-spacing: 0.02em;
-  }
-
-  /* FEATURES */
-  .features-section {
-    padding: 6rem 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .section-inner { max-width: 1100px; margin: 0 auto; }
-
-  .section-heading {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    margin-bottom: 2.5rem;
-    color: var(--text);
-  }
-
-  .features-grid {
+  .capability-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .feature-card {
-    padding: 1.75rem;
-    background: var(--bg);
-    transition: background 0.2s;
-  }
-  .feature-card:hover { background: var(--bg-card); }
-
-  .feature-icon {
-    font-size: 1.25rem;
-    margin-bottom: 0.875rem;
-    color: var(--indigo);
-  }
-
-  .feature-title {
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0;
-  }
-
-  .feature-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.65;
-  }
-
-  /* WORKFLOW */
-  .workflow-section {
-    padding: 6rem 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .workflow-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .workflow-item {
     border: 1px solid var(--border);
     border-radius: 8px;
-    background: var(--bg-card);
-    padding: 1.5rem;
+    overflow: hidden;
+    background: var(--border);
   }
 
-  .workflow-index {
-    width: 2rem;
-    height: 2rem;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--border-accent);
-    border-radius: 6px;
+  .capability-card {
+    padding: 1.55rem;
+    background: var(--bg);
+  }
+
+  .capability-card p {
     color: var(--green);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
-    margin-bottom: 1rem;
+    font-size: 0.72rem;
+    margin: 0 0 0.8rem;
+    text-transform: uppercase;
   }
 
-  .workflow-item h3 {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 600;
+  .capability-card h3 {
+    margin-bottom: 0.65rem;
+  }
+
+  .capability-card span {
+    display: block;
+    font-size: 0.88rem;
+  }
+
+  .room-layout,
+  .mobile-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: 2.4rem;
+    align-items: center;
+  }
+
+  .room-layout p,
+  .mobile-layout p {
+    margin: 1rem 0 1.2rem;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .stat-grid div {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    background: var(--bg-card);
+  }
+
+  .stat-grid strong,
+  .stat-grid span {
+    display: block;
+  }
+
+  .stat-grid strong {
     color: var(--text);
-    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
   }
 
-  .workflow-item p {
-    font-size: 0.86rem;
+  .stat-grid span {
     color: var(--muted);
-    line-height: 1.65;
+    font-size: 0.82rem;
   }
 
-  /* INSTALL */
-  .install-section {
-    padding: 6rem 1.5rem;
-    border-top: 1px solid var(--border);
-    background: var(--bg-2);
+  .mobile-section {
+    background: #F7F7F4;
+  }
+
+  .mobile-section h2 {
+    color: #111827;
+  }
+
+  .mobile-section .eyebrow {
+    color: #4F46E5;
+  }
+
+  .mobile-layout {
+    grid-template-columns: minmax(260px, 0.45fr) minmax(0, 0.8fr);
+  }
+
+  .mobile-layout p,
+  .mobile-layout li {
+    color: #4B5563;
+  }
+
+  .phone-frame {
+    width: min(360px, 100%);
+    margin: 0 auto;
+    border: 10px solid #111;
+    border-radius: 34px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 28px 70px rgba(0,0,0,0.28);
+  }
+
+  .phone-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .mobile-layout ul {
+    padding-left: 1.1rem;
+    margin: 1rem 0 0;
   }
 
   .install-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 1.2rem;
   }
 
   .install-grid > div {
@@ -608,86 +630,98 @@
   }
 
   .install-label {
-    font-size: 0.78rem;
-    font-family: var(--font-mono);
-    color: var(--muted);
-    margin-bottom: 0.625rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.55rem;
   }
-
-  .install-cta { text-align: center; }
 
   .code-block {
-    padding: 1.25rem 1.5rem;
     max-width: 100%;
+    padding: 1.15rem 1.25rem;
   }
+
   .code-block pre {
     margin: 0;
     font-size: 0.82rem;
     line-height: 1.75;
-    white-space: pre;
     overflow-x: auto;
+    white-space: pre;
   }
 
-  /* FOOTER */
   footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 1.5rem;
+    padding: 2rem 0;
   }
 
   .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
     display: flex;
-    align-items: center;
     gap: 2rem;
+    align-items: center;
     flex-wrap: wrap;
   }
 
   .footer-links {
-    display: flex;
-    gap: 1.25rem;
     flex: 1;
   }
-  .footer-links a {
-    font-size: 0.85rem;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-  .footer-links a:hover { color: var(--text); }
 
   .footer-copy {
-    font-size: 0.8rem;
     color: #334155;
+    font-size: 0.8rem;
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero {
-      min-height: 82vh;
+  @media (max-width: 900px) {
+    nav,
+    .section-inner,
+    .footer-inner {
+      width: min(100% - 2rem, 1180px);
     }
-    .hero-inner {
+
+    h1 {
+      font-size: clamp(2.35rem, 10vw, 2.85rem);
+      line-height: 1.02;
+    }
+
+    .hero-content {
+      transform: none;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      padding-bottom: 3rem;
+    }
+
+    .hero-shade {
+      background:
+        linear-gradient(90deg, rgba(5,8,16,0.96) 0%, rgba(5,8,16,0.72) 100%),
+        linear-gradient(0deg, rgba(7,11,18,0.92) 0%, rgba(7,11,18,0.12) 60%);
+    }
+
+    .snapshot-copy,
+    .section-heading-row,
+    .room-layout,
+    .mobile-layout,
+    .install-grid {
+      display: block;
+    }
+
+    .snapshot-copy > *,
+    .section-heading-row > *,
+    .room-layout > *,
+    .mobile-layout > * {
+      margin-bottom: 1.3rem;
+    }
+
+    .capability-grid {
       grid-template-columns: 1fr;
-      padding: 3rem 1rem 2rem;
-      width: 100%;
-      max-width: 100%;
     }
-    .hero-text {
-      min-width: 0;
-      max-width: 100%;
+
+    .stat-grid {
+      grid-template-columns: 1fr;
     }
-    .hero-heading {
-      font-size: 2.45rem;
-      line-height: 1.08;
+
+    section:not(.hero) {
+      padding: 4rem 0;
     }
-    .hero-sub {
-      font-size: 1rem;
+
+    .phone-frame {
+      max-width: 310px;
+      margin-bottom: 2rem;
     }
-    .features-grid { grid-template-columns: 1fr; }
-    .workflow-grid { grid-template-columns: 1fr; }
-    .install-grid  { grid-template-columns: 1fr; }
-    .terminal-window { display: none; }
   }
 </style>
