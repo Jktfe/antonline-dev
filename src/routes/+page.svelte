@@ -1,5 +1,37 @@
 <script lang="ts">
+  import AnimatedBeam, { type BeamNode, type BeamConnection } from '$lib/components/AnimatedBeam.svelte';
+  import CountUp from '$lib/components/CountUp.svelte';
+  import MagicCard from '$lib/components/MagicCard.svelte';
+  import ScrollReveal from '$lib/components/ScrollReveal.svelte';
+  import TickerTape, { type TickerItem } from '$lib/components/TickerTape.svelte';
+
   const GITHUB = 'https://github.com/Jktfe/a-nice-terminal';
+
+  const tickerItems: TickerItem[] = [
+    { label: 'Agent', value: '@claude · online', trend: 'up' },
+    { label: 'Agent', value: '@codex · idle', trend: 'flat' },
+    { label: 'Agent', value: '@gemini · working', trend: 'up' },
+    { label: 'Rooms', value: 6 },
+    { label: 'Linked chats', value: 11, delta: 18 },
+    { label: 'Open tasks', value: 24 },
+    { label: 'Evidence today', value: 142, delta: 12 },
+    { label: 'Models wired', value: 12 },
+  ];
+
+  const beamNodes: BeamNode[] = [
+    { id: 'terminals', x: 120, y: 80, label: 'Terminals' },
+    { id: 'agents', x: 480, y: 80, label: 'Agents' },
+    { id: 'rooms', x: 300, y: 160, label: 'Rooms' },
+    { id: 'antios', x: 120, y: 240, label: 'ANTios' },
+    { id: 'evidence', x: 480, y: 240, label: 'Evidence' },
+  ];
+
+  const beamConnections: BeamConnection[] = [
+    { from: 'terminals', to: 'rooms', bidirectional: true },
+    { from: 'agents', to: 'rooms', bidirectional: true },
+    { from: 'antios', to: 'rooms' },
+    { from: 'rooms', to: 'evidence' },
+  ];
 
   const capabilities = [
     {
@@ -34,11 +66,11 @@
     },
   ];
 
-  const stats = [
-    ['Terminals', 'PTYs with linked chats'],
-    ['Rooms', 'Shared agent coordination'],
-    ['Discussions', 'Linked focus spaces'],
-    ['Evidence', 'Messages, tasks, files, runs'],
+  const stats: Array<{ num: number; suffix?: string; label: string; desc: string }> = [
+    { num: 14, label: 'Agent CLIs', desc: 'Claude, Codex, Gemini, Copilot, local Qwen, Pi, shells' },
+    { num: 6, label: 'Surfaces', desc: 'Terminal, room, mobile, CLI, API, MCP' },
+    { num: 100, suffix: '%', label: 'Open source', desc: 'MIT licensed, self-hostable end-to-end' },
+    { num: 4, label: 'Layers of evidence', desc: 'Messages, tasks, file refs, run events' },
   ];
 </script>
 
@@ -63,47 +95,62 @@
   <img class="hero-shot" src="/product/ant-web-room.png" alt="ANT room showing agent messages, participants, linked discussions, tasks, file references, and the agent shortcut bar" />
   <div class="hero-shade"></div>
   <div class="hero-content">
-    <div class="hero-brand">
-      <img src="/favicon.svg" alt="" />
-      <div>
-        <strong>ANT</strong>
-        <span>A Nice Terminal</span>
+    <ScrollReveal stagger={70} distance={20} duration={650}>
+      <div class="hero-brand">
+        <img src="/favicon.svg" alt="" />
+        <div>
+          <strong>ANT</strong>
+          <span>A Nice Terminal</span>
+        </div>
       </div>
-    </div>
-    <div class="hero-badge"><span></span> Live multi-agent control room</div>
-    <h1>Your AI team needs somewhere to work.</h1>
-    <p>
-      ANT is the self-hosted operating surface for agent sessions: terminals,
-      rooms, prompt cards, linked discussions, evidence trails, and mobile triage.
-    </p>
-    <div class="hero-actions">
-      <a href="/docs" class="cta-primary">Get started</a>
-      <a href={GITHUB} target="_blank" rel="noopener" class="cta-secondary">View source</a>
-    </div>
-    <div class="hero-tags">
-      <span>Claude</span>
-      <span>Codex</span>
-      <span>Gemini</span>
-      <span>Local models</span>
-      <span>ANTios</span>
-    </div>
+      <div class="hero-badge"><span></span> Live multi-agent control room</div>
+      <div class="hero-ticker">
+        <TickerTape items={tickerItems} class="tickertape-hero" speed={45} aria-label="Live ANT activity" />
+      </div>
+      <h1>Your AI team needs somewhere to work.</h1>
+      <p>
+        ANT is the self-hosted operating surface for agent sessions: terminals,
+        rooms, prompt cards, linked discussions, evidence trails, and mobile triage.
+      </p>
+      <div class="hero-actions">
+        <a href="/docs" class="cta-primary">Get started</a>
+        <a href={GITHUB} target="_blank" rel="noopener" class="cta-secondary">View source</a>
+      </div>
+      <div class="hero-tags">
+        <span>Claude</span>
+        <span>Codex</span>
+        <span>Gemini</span>
+        <span>Local models</span>
+        <span>ANTios</span>
+      </div>
+    </ScrollReveal>
   </div>
 </section>
 
 <section class="snapshot-band">
   <div class="section-inner">
-    <div class="snapshot-copy">
-      <p class="eyebrow">This is ANT</p>
-      <h2>Not a terminal skin. A coordination layer.</h2>
-      <p>
-        The home screen shows the live operational graph: terminal agents on the
-        left, chat rooms on the right, linked chats attached to every PTY, and
-        status that follows real activity.
-      </p>
-    </div>
-    <div class="product-frame wide">
-      <img src="/product/ant-web-home.png" alt="ANT home screen showing terminal sessions, linked chats, chat rooms, and agent status" />
-    </div>
+    <ScrollReveal stagger={120} distance={28}>
+      <div class="snapshot-copy">
+        <p class="eyebrow">This is ANT</p>
+        <h2>Not a terminal skin. A coordination layer.</h2>
+        <p>
+          The home screen shows the live operational graph: terminal agents on the
+          left, chat rooms on the right, linked chats attached to every PTY, and
+          status that follows real activity.
+        </p>
+      </div>
+      <div class="beam-frame">
+        <AnimatedBeam
+          width={600}
+          height={320}
+          nodes={beamNodes}
+          connections={beamConnections}
+          beamColor="#22C55E"
+          beamSpeed={2.6}
+          gradient
+        />
+      </div>
+    </ScrollReveal>
   </div>
 </section>
 
@@ -145,40 +192,49 @@
 
     <div class="capability-grid">
       {#each capabilities as item}
-        <article class="capability-card">
+        <MagicCard
+          gradientSize={260}
+          gradientColor="rgba(34, 197, 94, 0.08)"
+          class="capability-card"
+        >
           <p>{item.kicker}</p>
           <h3>{item.title}</h3>
           <span>{item.desc}</span>
-        </article>
+        </MagicCard>
       {/each}
     </div>
   </div>
 </section>
 
 <section class="room-section">
-  <div class="section-inner room-layout">
-    <div>
-      <p class="eyebrow">Rooms that know the work</p>
-      <h2>Discuss, split, decide, and keep receipts.</h2>
-      <p>
-        A room can carry participants, linked discussions, task state, file
-        references, memory, prompt responses, and read receipts. Agents respond
-        in the room they are in, while summaries and decisions can be promoted
-        deliberately.
-      </p>
-      <div class="stat-grid">
-        {#each stats as stat}
-          <div>
-            <strong>{stat[0]}</strong>
-            <span>{stat[1]}</span>
-          </div>
-        {/each}
+  <ScrollReveal stagger={0} distance={32} duration={750}>
+    <div class="section-inner room-layout">
+      <div>
+        <p class="eyebrow">Rooms that know the work</p>
+        <h2>Discuss, split, decide, and keep receipts.</h2>
+        <p>
+          A room can carry participants, linked discussions, task state, file
+          references, memory, prompt responses, and read receipts. Agents respond
+          in the room they are in, while summaries and decisions can be promoted
+          deliberately.
+        </p>
+        <div class="stat-grid">
+          {#each stats as stat}
+            <div>
+              <strong>
+                <CountUp end={stat.num} suffix={stat.suffix ?? ''} duration={1600} size="md" />
+              </strong>
+              <span class="stat-label">{stat.label}</span>
+              <span>{stat.desc}</span>
+            </div>
+          {/each}
+        </div>
+      </div>
+      <div class="product-frame">
+        <img src="/product/ant-web-room.png" alt="ANT chat room with participants, discussions, tasks, file refs, and agent shortcuts" />
       </div>
     </div>
-    <div class="product-frame">
-      <img src="/product/ant-web-room.png" alt="ANT chat room with participants, discussions, tasks, file refs, and agent shortcuts" />
-    </div>
-  </div>
+  </ScrollReveal>
 </section>
 
 <section class="mobile-section">
@@ -461,8 +517,12 @@
   .section-heading-row > p,
   .room-layout p,
   .mobile-layout p,
-  .mobile-layout li,
-  .capability-card span {
+  .mobile-layout li {
+    color: #9AA8BA;
+    line-height: 1.7;
+  }
+
+  :global(.capability-card) span {
     color: #9AA8BA;
     line-height: 1.7;
   }
@@ -557,8 +617,59 @@
     height: auto;
   }
 
-  .product-frame.wide {
-    max-height: 640px;
+  .beam-frame {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(13, 21, 32, 0.92), rgba(7, 11, 18, 0.96));
+    box-shadow:
+      0 32px 80px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .beam-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .hero-ticker {
+    margin: 0 0 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(7, 11, 18, 0.62);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+  }
+
+  :global(.tickertape-hero) {
+    --tickertape-bg: transparent;
+    --tickertape-fg: #CDD6E2;
+    --tickertape-label: #6B7A92;
+    --tickertape-value: #E2E8F0;
+    --tickertape-up: #22C55E;
+    --tickertape-down: #EF4444;
+    --tickertape-flat: #64748B;
+    --tickertape-sep: #2A3441;
+    --tickertape-fs: 0.78rem;
+    --tickertape-py: 0.5rem;
+    --tickertape-fw: 500;
+    --tickertape-font: var(--font-mono);
+  }
+
+  .stat-label {
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.15rem;
   }
 
   .video-section {
@@ -607,12 +718,12 @@
     background: var(--border);
   }
 
-  .capability-card {
+  :global(.capability-card) {
     padding: 1.55rem;
     background: var(--bg);
   }
 
-  .capability-card p {
+  :global(.capability-card) p {
     color: var(--accent-live);
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -620,11 +731,11 @@
     text-transform: uppercase;
   }
 
-  .capability-card h3 {
+  :global(.capability-card) h3 {
     margin-bottom: 0.65rem;
   }
 
-  .capability-card span {
+  :global(.capability-card) span {
     display: block;
     font-size: 0.88rem;
   }
