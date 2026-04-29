@@ -1,7 +1,7 @@
 <script lang="ts">
-  import AnimatedBeam, { type BeamNode, type BeamConnection } from '$lib/components/AnimatedBeam.svelte';
+  import AntColony from '$lib/components/AntColony.svelte';
+  import CapabilityFlipGrid, { type Capability } from '$lib/components/CapabilityFlipGrid.svelte';
   import CountUp from '$lib/components/CountUp.svelte';
-  import MagicCard from '$lib/components/MagicCard.svelte';
   import ScrollReveal from '$lib/components/ScrollReveal.svelte';
   import TickerTape, { type TickerItem } from '$lib/components/TickerTape.svelte';
 
@@ -18,51 +18,47 @@
     { label: 'Models wired', value: 12 },
   ];
 
-  const beamNodes: BeamNode[] = [
-    { id: 'terminals', x: 120, y: 80, label: 'Terminals' },
-    { id: 'agents', x: 480, y: 80, label: 'Agents' },
-    { id: 'rooms', x: 300, y: 160, label: 'Rooms' },
-    { id: 'antios', x: 120, y: 240, label: 'ANTios' },
-    { id: 'evidence', x: 480, y: 240, label: 'Evidence' },
-  ];
-
-  const beamConnections: BeamConnection[] = [
-    { from: 'terminals', to: 'rooms', bidirectional: true },
-    { from: 'agents', to: 'rooms', bidirectional: true },
-    { from: 'antios', to: 'rooms' },
-    { from: 'rooms', to: 'evidence' },
-  ];
-
-  const capabilities = [
+  const capabilities: Capability[] = [
     {
       kicker: 'Terminal + chat pairs',
       title: 'Every agent gets a terminal and a room.',
       desc: 'Run Claude, Codex, Gemini, Copilot, local Qwen/Pi models, or a normal shell. ANT keeps the PTY, linked chat, status, and history together.',
+      cli: 'ant new "claude --bare"\nant chat send <id> --msg "ship the feature"',
+      docsHref: '/docs/cli',
     },
     {
       kicker: 'Room Links',
       title: 'Split noisy work without losing context.',
       desc: 'Create focused discussions, link existing rooms, promote summaries, and keep decisions visible without flooding the main coordination room.',
+      cli: 'ant link <terminal-id> <room-id>\nant join-room <room-id>',
+      docsHref: '/docs/cli',
     },
     {
       kicker: 'Prompt Bridge',
       title: 'Needs-input becomes a visible control surface.',
       desc: 'Approvals, selections, retries, text responses, and discarded events show up in chat instead of being buried inside an agent TUI.',
+      cli: 'ant promote <event-id>\nant chat send <room> --msg "approve <event-id>"',
+      docsHref: '/docs',
     },
     {
       kicker: 'Evidence',
       title: 'Work leaves a searchable trail.',
       desc: 'Messages, terminal history, run events, tasks, file refs, read receipts, digests, and exports all point back to what actually happened.',
+      cli: 'ant search "broken auth"\nant export <room-id> --format=md',
+      docsHref: '/docs',
     },
     {
       kicker: 'Agent Awareness',
       title: 'Working means real output, not guesswork.',
       desc: 'ANT tracks visible terminal activity so Codex-style CLIs do not look idle just because they lack a tidy status line.',
+      cli: 'ant status\nant terminal <id> --tail',
+      docsHref: '/docs/cli',
     },
     {
       kicker: 'Mobile',
       title: 'ANTios keeps the control room in your pocket.',
       desc: 'Quick triage, needs-input counters, chat-first navigation, thumb-friendly controls, and room lists for checking in away from the desk.',
+      docsHref: '/docs',
     },
   ];
 
@@ -91,6 +87,10 @@
   </nav>
 </header>
 
+<aside class="ticker-band" aria-label="Live ANT activity">
+  <TickerTape items={tickerItems} class="tickertape-band" speed={45} />
+</aside>
+
 <section class="hero">
   <img class="hero-shot" src="/product/ant-web-room.png" alt="ANT room showing agent messages, participants, linked discussions, tasks, file references, and the agent shortcut bar" />
   <div class="hero-shade"></div>
@@ -102,10 +102,6 @@
           <strong>ANT</strong>
           <span>A Nice Terminal</span>
         </div>
-      </div>
-      <div class="hero-badge"><span></span> Live multi-agent control room</div>
-      <div class="hero-ticker">
-        <TickerTape items={tickerItems} class="tickertape-hero" speed={45} aria-label="Live ANT activity" />
       </div>
       <h1>Your AI team needs somewhere to work.</h1>
       <p>
@@ -140,15 +136,7 @@
         </p>
       </div>
       <div class="beam-frame">
-        <AnimatedBeam
-          width={600}
-          height={320}
-          nodes={beamNodes}
-          connections={beamConnections}
-          beamColor="#22C55E"
-          beamSpeed={2.6}
-          gradient
-        />
+        <AntColony width={600} height={360} />
       </div>
     </ScrollReveal>
   </div>
@@ -190,19 +178,7 @@
       <p>Everything here exists because multi-agent sessions get noisy, agents need steering, and finished work needs evidence.</p>
     </div>
 
-    <div class="capability-grid">
-      {#each capabilities as item}
-        <MagicCard
-          gradientSize={260}
-          gradientColor="rgba(34, 197, 94, 0.08)"
-          class="capability-card"
-        >
-          <p>{item.kicker}</p>
-          <h3>{item.title}</h3>
-          <span>{item.desc}</span>
-        </MagicCard>
-      {/each}
-    </div>
+    <CapabilityFlipGrid items={capabilities} />
   </div>
 </section>
 
@@ -453,7 +429,6 @@
     font-size: 0.78rem;
   }
 
-  .hero-badge,
   .eyebrow,
   .install-label {
     color: #8EA0B8;
@@ -463,29 +438,8 @@
     text-transform: uppercase;
   }
 
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    padding: 0.35rem 0.7rem;
-    border: 1px solid rgba(34,197,94,0.34);
-    border-radius: 999px;
-    background: rgba(10,15,24,0.72);
-    margin-bottom: 1.35rem;
-    text-transform: none;
-  }
-
-  .hero-badge span {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent-live);
-    box-shadow: 0 0 10px var(--accent-live);
-  }
-
   h1,
-  h2,
-  h3 {
+  h2 {
     color: var(--text);
     font-family: var(--font-sans);
     letter-spacing: 0;
@@ -506,23 +460,12 @@
     margin: 0;
   }
 
-  h3 {
-    font-size: 1.03rem;
-    font-weight: 700;
-    margin: 0;
-  }
-
   .hero-content > p,
   .snapshot-copy p,
   .section-heading-row > p,
   .room-layout p,
   .mobile-layout p,
   .mobile-layout li {
-    color: #9AA8BA;
-    line-height: 1.7;
-  }
-
-  :global(.capability-card) span {
     color: #9AA8BA;
     line-height: 1.7;
   }
@@ -639,16 +582,20 @@
     opacity: 0.6;
   }
 
-  .hero-ticker {
-    margin: 0 0 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
+  .ticker-band {
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(7, 11, 18, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     overflow: hidden;
-    background: rgba(7, 11, 18, 0.62);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
   }
 
-  :global(.tickertape-hero) {
+  :global(.tickertape-band) {
     --tickertape-bg: transparent;
     --tickertape-fg: #CDD6E2;
     --tickertape-label: #6B7A92;
@@ -658,7 +605,7 @@
     --tickertape-flat: #64748B;
     --tickertape-sep: #2A3441;
     --tickertape-fs: 0.78rem;
-    --tickertape-py: 0.5rem;
+    --tickertape-py: 0.55rem;
     --tickertape-fw: 500;
     --tickertape-font: var(--font-mono);
   }
@@ -708,44 +655,17 @@
     margin-bottom: 2rem;
   }
 
-  .capability-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--border);
-  }
-
-  :global(.capability-card) {
-    padding: 1.55rem;
-    background: var(--bg);
-  }
-
-  :global(.capability-card) p {
-    color: var(--accent-live);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    margin: 0 0 0.8rem;
-    text-transform: uppercase;
-  }
-
-  :global(.capability-card) h3 {
-    margin-bottom: 0.65rem;
-  }
-
-  :global(.capability-card) span {
-    display: block;
-    font-size: 0.88rem;
-  }
-
   .room-layout,
   .mobile-layout {
     display: grid;
     grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
     gap: 2.4rem;
-    align-items: center;
+    align-items: start;
+  }
+
+  .room-layout > .product-frame {
+    align-self: start;
+    margin-top: 2.6rem;
   }
 
   .room-layout p,
@@ -914,10 +834,6 @@
     .mobile-layout > *,
     .video-layout > * {
       margin-bottom: 1.3rem;
-    }
-
-    .capability-grid {
-      grid-template-columns: 1fr;
     }
 
     .stat-grid {
