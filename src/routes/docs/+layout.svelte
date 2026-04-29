@@ -18,7 +18,7 @@
       <a href="/" style="display:flex; align-items:center; gap:0.5rem; text-decoration:none;">
         <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
           <rect width="32" height="32" rx="7" fill="#070B12"/>
-          <path d="M8 12 L14 16 L8 20" stroke="#6366F1" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 12 L14 16 L8 20" stroke="#94A3B8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           <rect x="16" y="20" width="8" height="2.5" rx="1.25" fill="#22C55E"/>
         </svg>
         <span style="font-family:var(--font-display); font-weight:700; font-size:0.95rem; color:var(--text);">ANT</span>

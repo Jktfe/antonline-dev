@@ -412,7 +412,7 @@
     align-items: center;
     gap: 0.55rem;
     padding: 0.35rem 0.7rem;
-    border: 1px solid rgba(99,102,241,0.34);
+    border: 1px solid rgba(34,197,94,0.34);
     border-radius: 999px;
     background: rgba(10,15,24,0.72);
     margin-bottom: 1.35rem;
@@ -423,8 +423,8 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 10px var(--green);
+    background: var(--accent-live);
+    box-shadow: 0 0 10px var(--accent-live);
   }
 
   h1,
@@ -485,7 +485,8 @@
   }
 
   .cta-primary {
-    background: var(--indigo);
+    background: var(--accent-live);
+    color: #07120A;
     border-radius: 8px;
     padding: 0.65rem 1.15rem;
   }
@@ -612,7 +613,7 @@
   }
 
   .capability-card p {
-    color: var(--green);
+    color: var(--accent-live);
     font-family: var(--font-mono);
     font-size: 0.72rem;
     margin: 0 0 0.8rem;
@@ -681,7 +682,7 @@
   }
 
   .mobile-section .eyebrow {
-    color: #4F46E5;
+    color: #15803D;
   }
 
   .mobile-layout {
