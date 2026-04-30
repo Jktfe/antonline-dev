@@ -7,6 +7,39 @@
 
   const GITHUB = 'https://github.com/Jktfe/a-nice-terminal';
 
+  const agentPrompt = `Set up ANT (A Nice Terminal — a self-hosted coordination layer for AI agents) on this machine.
+
+1. Identify which CLI you are (Claude Code, Codex, Gemini, Copilot, Qwen, or Pi).
+2. Read https://antonline.dev/agentsetup — follow the universal first steps, then your agent's section.
+3. Source: https://github.com/Jktfe/a-nice-terminal
+
+Pause and confirm with me before: writing secrets to .env, generating API keys, installing launchd/systemd services, or sharing tokens. Stop and ask if anything is unclear.`;
+
+  let copyState = $state<'idle' | 'copied' | 'error'>('idle');
+  let copyTimer: ReturnType<typeof setTimeout> | null = null;
+
+  async function copyAgentPrompt() {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(agentPrompt);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = agentPrompt;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      copyState = 'copied';
+    } catch {
+      copyState = 'error';
+    }
+    if (copyTimer) clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => { copyState = 'idle'; }, 2200);
+  }
+
   const tickerItems: TickerItem[] = [
     { label: 'Agent', value: '@claude · online', trend: 'up' },
     { label: 'Agent', value: '@codex · idle', trend: 'flat' },
@@ -120,6 +153,44 @@
         <span>ANTios</span>
       </div>
     </ScrollReveal>
+  </div>
+</section>
+
+<section class="agent-paste" aria-labelledby="agent-paste-heading">
+  <div class="section-inner">
+    <div class="agent-paste-head">
+      <p class="eyebrow">Fast path</p>
+      <h2 id="agent-paste-heading">Skip the docs. Tell your agent.</h2>
+      <p class="agent-paste-lede">
+        Open Claude Code, Codex, Gemini, Copilot, Qwen, or Pi in a terminal — paste this in and let it install ANT for you.
+      </p>
+    </div>
+
+    <div class="agent-paste-block">
+      <div class="agent-paste-bar">
+        <span class="agent-paste-label">Agent install brief</span>
+        <button
+          type="button"
+          class="agent-paste-copy"
+          onclick={copyAgentPrompt}
+          aria-live="polite"
+          data-state={copyState}
+        >
+          {#if copyState === 'copied'}
+            ✓ Copied
+          {:else if copyState === 'error'}
+            Copy failed
+          {:else}
+            Copy
+          {/if}
+        </button>
+      </div>
+      <pre class="agent-paste-pre"><code>{agentPrompt}</code></pre>
+    </div>
+
+    <p class="agent-paste-foot">
+      Want to read it first? <a href="/agentsetup">See the per-agent setup →</a>
+    </p>
   </div>
 </section>
 
@@ -524,6 +595,104 @@
   .install-section {
     background: var(--bg-2);
   }
+
+  .agent-paste {
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.05), transparent 70%);
+  }
+
+  .agent-paste-head {
+    max-width: 60ch;
+    margin: 0 0 1.6rem;
+  }
+
+  .agent-paste-lede {
+    color: rgba(226, 232, 240, 0.78);
+    line-height: 1.6;
+    margin: 0.45rem 0 0;
+  }
+
+  .agent-paste-block {
+    background: #050810;
+    border: 1px solid rgba(34, 197, 94, 0.32);
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+
+  .agent-paste-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.85rem 0.6rem 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .agent-paste-label {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-live);
+  }
+
+  .agent-paste-copy {
+    background: var(--accent-live-dim);
+    border: 1px solid rgba(34, 197, 94, 0.45);
+    color: var(--accent-live);
+    border-radius: 8px;
+    padding: 0.4rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 180ms ease, color 180ms ease;
+  }
+  .agent-paste-copy:hover,
+  .agent-paste-copy:focus-visible {
+    background: var(--accent-live);
+    color: #07120A;
+    outline: none;
+  }
+  .agent-paste-copy[data-state='copied'] {
+    background: var(--accent-live);
+    color: #07120A;
+  }
+  .agent-paste-copy[data-state='error'] {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: var(--accent-alert);
+  }
+
+  .agent-paste-pre {
+    margin: 0;
+    padding: 1.25rem 1.4rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    line-height: 1.7;
+    color: #C9D5E2;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: auto;
+  }
+  .agent-paste-pre code {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    padding: 0;
+  }
+
+  .agent-paste-foot {
+    margin: 1rem 0 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  .agent-paste-foot a {
+    color: var(--accent-live);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(34, 197, 94, 0.32);
+  }
+  .agent-paste-foot a:hover { border-bottom-color: var(--accent-live); }
 
   .snapshot-copy {
     display: grid;
